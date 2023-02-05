@@ -14,13 +14,37 @@ fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${A
     let firstCity = citySearch[0];
     
         // Fetch Call To Search City Using lat and lon 
-   return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=${Api_Key}`)
+   return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${firstCity.lat}&lon=${firstCity.lon}&appid=${Api_Key}&units=metric`)
 
 })
 
     .then(response => response.json())
     .then( data => {
+        //data to be passed to function
+      
     console.log(data)
+    let cityName = data.city.name
+
+    let cityTemp = data.list[0].main.temp
+
+    let cityWindSpeed = data.list[0].wind.speed
+
+   let cityWindHumidity = data.list[0].main.humidity
+
+    console.log(cityName)
+    console.log(cityTemp)
+    console.log(cityWindSpeed)
+    console.log(cityWindHumidity)
+   // console.log(data.city.country)
+   // console.log( {city} = data)
+   let cityTile = document.querySelector('.City')
+    cityTile.innerHTML = `
+    
+    <p>City Name: ${cityName}</p>
+    <p>City Temp: ${cityTemp}</p>
+    <p>City Wind: ${cityWindSpeed}</p>
+    <p>City Humidity: ${cityWindHumidity}</p> `
+
 })
 }
 
