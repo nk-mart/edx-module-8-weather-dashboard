@@ -20,30 +20,38 @@ fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${A
 
     .then(response => response.json())
     .then( data => {
-        //data to be passed to function
+        
       
     console.log(data)
+
+    // Parse Data values from response
     let cityName = data.city.name
 
     let cityTemp = data.list[0].main.temp
 
     let cityWindSpeed = data.list[0].wind.speed
 
-   let cityWindHumidity = data.list[0].main.humidity
+    let cityWindHumidity = data.list[0].main.humidity
 
-    console.log(cityName)
-    console.log(cityTemp)
-    console.log(cityWindSpeed)
-    console.log(cityWindHumidity)
-   // console.log(data.city.country)
-   // console.log( {city} = data)
+    let weatherIcon = data.list[0].weather[0].icon
+
+    let timeUnix = data.list[0].dt
+
+    let timeMoment = moment(timeUnix).format("DDD/MMM/Y")
+
+    
+        console.log(timeUnix)
+        console.log(moment(data.list[0].dt).format("Y"))
+   
    let cityTile = document.querySelector('.City')
     cityTile.innerHTML = `
     
-    <p>City Name: ${cityName}</p>
-    <p>City Temp: ${cityTemp}</p>
-    <p>City Wind: ${cityWindSpeed}</p>
-    <p>City Humidity: ${cityWindHumidity}</p> `
+    <p class="mt-1 h3">${cityName} ${timeMoment} </p>
+
+    <img src=" http://openweathermap.org/img/wn/${weatherIcon}@2x.png" alt="city weather icon" >
+    <p>City Temp: ${cityTemp} °C</p>
+    <p>City Wind: ${cityWindSpeed} KPH</p>
+    <p>City Humidity: ${cityWindHumidity} %</p> `
 
 })
 }
